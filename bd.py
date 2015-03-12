@@ -32,3 +32,33 @@ c.execute('''CREATE TABLE activite
 
 conn.commit()
 conn.close()
+
+def insertEquipement(equipement):
+	conn = sqlite3.connect('equipement.db')
+	c = conn.cursor()
+	c.execute('''INSERT INTO equipement 
+    VALUES (equipement.EquipementId, equipement.EquNom)''')
+	conn.commit()
+	conn.close()
+
+def afficheEquipement():
+	conn = sqlite3.connect('equipement.db')
+	c = conn.cursor()
+	for row in c.execute('SELECT * FROM equipement ORDER BY EquNom'):
+    	print(row)
+	conn.close()
+
+def insertActivite(activite):
+	conn = sqlite3.connect('activite.db')
+	c = conn.cursor()
+	c.execute('''INSERT INTO activite
+    VALUES (activite.ActCode, activite.ActLib, activite.EquipementId)''')
+	conn.commit()
+	conn.close()
+	
+def afficheActivite():
+	conn = sqlite3.connect('activite.db')
+	c = conn.cursor()
+	for row in c.execute('SELECT * FROM activite ORDER BY ActLib'):
+    	print(row)
+	conn.close()

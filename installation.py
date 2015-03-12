@@ -1,5 +1,5 @@
 class Installation:
-    def __init__(self, InsNumeroInstall, InsPartLibelle, InsNoVoie, InsLibelleVoie, InsCodePostal, ComLib, Latitude, Longitude, ):
+    def __init__(self, InsNumeroInstall, InsPartLibelle, InsNoVoie, InsLibelleVoie, InsCodePostal, ComLib, Latitude, Longitude):
         self.InsNumeroInstall = InsNumeroInstall
         self.InsPartLibelle = InsPartLibelle
         self.adresse = InsNoVoie +" "+ InsLibelleVoie

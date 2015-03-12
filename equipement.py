@@ -1,5 +1,5 @@
 class Equipement :
-	def __init__(EquipementId, EquNom, InsNumeroInstall):
+	def __init__(self, EquipementId, EquNom, InsNumeroInstall):
 		self.EquipementId = EquipementId
         self.EquNom = EquNom
         self.InsNumeroInstall = InsNumeroInstall
