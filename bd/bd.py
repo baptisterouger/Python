@@ -37,3 +37,12 @@ class bd:
 	def afficheActivite(self):
 		for row in self.c.execute('SELECT * FROM activite ORDER BY ActLib'):
 			print(row)
+
+	def insertInstallation(self, installation):
+		self.c.execute('''INSERT INTO installation
+	    VALUES (installation.InsNumeroInstall, installation.InsPartLibelle, installation.InsNoVoie, installation.InsLibelleVoie, installation.InsCodePostal, installation.ComLib, installation.Latitude, installation.Longitude)''')
+		self.conn.commit()
+		
+	def afficheInstallation(self):
+		for row in self.c.execute('SELECT * FROM activite ORDER BY InsPartLibelle'):
+			print(row)
