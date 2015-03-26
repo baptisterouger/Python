@@ -2,12 +2,13 @@ class Installation:
     def __init__(self, InsNumeroInstall, InsPartLibelle, InsNoVoie, InsLibelleVoie, InsCodePostal, ComLib, Latitude, Longitude):
         self.InsNumeroInstall = InsNumeroInstall
         self.InsPartLibelle = InsPartLibelle
-        self.adresse = InsNoVoie +" "+ InsLibelleVoie
+        self.InsNoVoie = InsNoVoie 
+        self.InsLibelleVoie = InsLibelleVoie
         self.InsCodePostal = InsCodePostal
         self.ComLib = ComLib
         self.Latitude = Latitude
         self.Longitude = Longitude
-        self.InsNumeroInstallE = InsNumeroInstallE
+        self.InsNumeroInstall = InsNumeroInstall
         
 
 
@@ -19,7 +20,11 @@ class Installation:
     def get_InsPartLibelle(self):
     	return str(self.InsPartLibelle)
     def get_adresse(self):
-    	return str(self.adresse)
+    	return str(self.InsNoVoie +" "+ self.InsLibelleVoie)
+    def get_InsNoVoie(self):
+        return str(self.InsNoVoie)
+    def get_InsLibelleVoie(self):
+        return str(self.InsLibelleVoie)
     def get_InsCodePostal(self):
     	return str(self.InsCodePostal)
     def get_ComLib(self):

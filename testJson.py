@@ -1,7 +1,7 @@
 import json
 from pprint import pprint
 
-with open('data.paysdelaloire.fr.activite.json') as data_file:    
+with open('BDInstall.json') as data_file:    
     data = json.load(data_file)
 
 

@@ -1,4 +1,7 @@
 import sqlite3
+import modele.equipement as equipement
+import modele.activite as activite
+import modele.installation as installation
 
 class bd:
 	def __init__(self):
@@ -20,8 +23,7 @@ class bd:
 		self.conn.commit()
 
 	def insertEquipement(self, equipement):
-		self.c.execute('''INSERT INTO equipement 
-	    VALUES (equipement.EquipementId, equipement.EquNom)''')
+		self.c.execute("INSERT INTO equipement VALUES (?, ?, ?)", (equipement.dysplay_EquipementId(), equipement.dysplay_EquNom(), equipement.dysplay_InsNumeroInstall()))
 		self.conn.commit()
 		
 
@@ -30,8 +32,7 @@ class bd:
 			print(row)		
 
 	def insertActivite(self, activite):
-		self.c.execute('''INSERT INTO activite
-	    VALUES (activite.ActCode, activite.ActLib, activite.EquipementId)''')
+		self.c.execute("INSERT INTO activite VALUES(?, ?, ?)", (activite.dysplay_ActCode(), activite.dysplay_ActLib(), activite.dysplay_EquipementId()))
 		self.conn.commit()
 		
 	def afficheActivite(self):
@@ -39,10 +40,9 @@ class bd:
 			print(row)
 
 	def insertInstallation(self, installation):
-		self.c.execute('''INSERT INTO installation
-	    VALUES (installation.InsNumeroInstall, installation.InsPartLibelle, installation.InsNoVoie, installation.InsLibelleVoie, installation.InsCodePostal, installation.ComLib, installation.Latitude, installation.Longitude)''')
+		self.c.execute("INSERT INTO installation VALUES(?, ?, ?, ?, ?, ?, ?, ?)", (installation.get_InsNumeroInstall(), installation.get_InsPartLibelle(), installation.get_InsNoVoie(), installation.get_InsLibelleVoie(), installation.get_InsCodePostal(), installation.get_ComLib(), installation.get_Latitude(), installation.get_Longitude()))
 		self.conn.commit()
 		
 	def afficheInstallation(self):
-		for row in self.c.execute('SELECT * FROM activite ORDER BY InsPartLibelle'):
+		for row in self.c.execute('SELECT * FROM installation ORDER BY InsNumeroInstall'):
 			print(row)
