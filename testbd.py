@@ -22,7 +22,23 @@ data.creation()
 
 with open('lesJson/equipement.json') as data_file:    
     jason = json.load(data_file)
-for item in jason:
-	equipement=equipement.Equipement(int(item['EquipementId']), item['EquNom'], int(item['InsNumeroInstall']))
-	data.insertEquipement(equipement)
-	print("ligne ajoutée"+equipement.dysplay_EquipementId())
+for item in jason['data']:
+	equ= equipement.Equipement(item['EquipementId'], item['EquNom'], item['InsNumeroInstall'])
+	data.insertEquipement(equ)
+print("tous les équipements sont ajoutés !! ")
+
+with open('lesJson/activite.json') as data_file:    
+	jason = json.load(data_file)
+for item in jason['data']:
+	act= activite.Activite(item['ActCode'], item['ActLib'], item['EquipementId'])
+	data.insertActivite(act)
+print("toutes les activités sont ajoutées !!!")
+
+with open('lesJson/installation.json') as data_file:    
+	jason = json.load(data_file)
+for item in jason['data']:
+	ins= installation.Installation(item['InsNumeroInstall'], item['InsPartLibelle'], item['InsNoVoie'], item['InsLibelleVoie'], item['InsCodePostal'], item['ComLib'], item['Latitude'], item['Longitude'])
+	data.insertInstallation(ins)
+
+print("toutes les installations sont ajoutées !!!!")
+data.commit()

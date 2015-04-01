@@ -7,42 +7,74 @@ class bd:
 	def __init__(self):
 		self.conn = sqlite3.connect('data.db')
 		self.c = self.conn.cursor()
+
 	def creation(self):
 		self.c.execute("DROP TABLE IF EXISTS installation")
 		self.c.execute('''CREATE TABLE installation
-		             (InsNumeroInstall integer, InsPartLibelle text, InsNoVoie integer, InsLibelleVoie text, InsCodePostal integer, ComLib text, Latitude integer, Longitude integer)''')
+		             (InsNumeroInstall text, InsPartLibelle text, InsNoVoie text, InsLibelleVoie text, InsCodePostal text, ComLib text, Latitude real, Longitude real)''')
 
 		self.c.execute("DROP TABLE IF EXISTS equipement")
 		self.c.execute('''CREATE TABLE equipement
-		             (EquipementId integer, EquNom text, InsNumeroInstall integer)''')
+		             (EquipementId text, EquNom text, InsNumeroInstall text)''')
 
 		self.c.execute("DROP TABLE IF EXISTS activite")
 		self.c.execute('''CREATE TABLE activite
-		             (ActCode integer, ActLib text, EquipementId integer)''')
+		             (ActCode text, ActLib text, EquipementId text)''')
 
 		self.conn.commit()
 
 	def insertEquipement(self, equipement):
-		self.c.execute("INSERT INTO equipement VALUES (?, ?, ?)", (equipement.dysplay_EquipementId(), equipement.dysplay_EquNom(), equipement.dysplay_InsNumeroInstall()))
-		self.conn.commit()
+		self.c.execute("INSERT INTO equipement VALUES (?, ?, ?)", (equipement.display_EquipementId(), equipement.display_EquNom(), equipement.display_InsNumeroInstall()))
+		
 		
 
 	def afficheEquipement(self):
-		for row in self.c.execute('SELECT * FROM equipement ORDER BY EquNom'):
-			print(row)		
+		results = self.c.execute('SELECT * FROM equipement ORDER BY EquNom')
+		tab=[]
+		for row in results:
+			equ= equipement.Equipement(row[0], row[1], row[2])
+			tab.append(equ)
+		return tab
+
+	def afficheEquipementLib(self):
+		results = self.c.execute('SELECT DISTINCT EquNom FROM equipement')
+		return results
 
 	def insertActivite(self, activite):
-		self.c.execute("INSERT INTO activite VALUES(?, ?, ?)", (activite.dysplay_ActCode(), activite.dysplay_ActLib(), activite.dysplay_EquipementId()))
-		self.conn.commit()
+		self.c.execute("INSERT INTO activite VALUES(?, ?, ?)", (activite.display_ActCode(), activite.display_ActLib(), activite.display_EquipementId()))
+		
 		
 	def afficheActivite(self):
-		for row in self.c.execute('SELECT * FROM activite ORDER BY ActLib'):
-			print(row)
+		results = self.c.execute('SELECT * FROM activite ORDER BY ActLib')
+		tab=[]
+		for row in results:
+			act= activite.Activite(row[0], row[1], row[2])
+			tab.append(act)
+		return tab
+
+	def afficheActiviteLib(self):
+		results = self.c.execute('SELECT DISTINCT ActLib FROM activite')
+		return results
 
 	def insertInstallation(self, installation):
 		self.c.execute("INSERT INTO installation VALUES(?, ?, ?, ?, ?, ?, ?, ?)", (installation.get_InsNumeroInstall(), installation.get_InsPartLibelle(), installation.get_InsNoVoie(), installation.get_InsLibelleVoie(), installation.get_InsCodePostal(), installation.get_ComLib(), installation.get_Latitude(), installation.get_Longitude()))
-		self.conn.commit()
+		
 		
 	def afficheInstallation(self):
-		for row in self.c.execute('SELECT * FROM installation ORDER BY InsNumeroInstall'):
-			print(row)
+		results = self.c.execute('SELECT * FROM installation ORDER BY InsNumeroInstall')
+		tab=[]
+		for row in results:
+			ins= installation.Installation(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7])
+			tab.append(ins)
+		return tab
+
+	def afficheInstallationVille(self):
+		results = self.c.execute('SELECT DISTINCT ComLib FROM installation')
+		return results
+
+	def afficheInstallationParVille(self, ville):
+		results = self.c.execute('''SELECT DISTINCT InsPartLibelle FROM installation WHERE ComLib = "'''+ ville +'''"''')
+		return results
+
+	def commit(self):
+		self.conn.commit()

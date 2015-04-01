@@ -7,12 +7,12 @@ class Equipement :
 	def __repr__(self):
 		return "{} - {}".format(self.EquipementId, self.EquNom)
 
-	def dysplay_EquipementId(self):
-		return int(self.EquipementId)
-	def dysplay_EquNom(self):
+	def display_EquipementId(self):
+		return str(self.EquipementId)
+	def display_EquNom(self):
 		return str(self.EquNom)
-	def dysplay_InsNumeroInstall(self):
-		return int(self.InsNumeroInstall)
+	def display_InsNumeroInstall(self):
+		return str(self.InsNumeroInstall)
 
 	def set_EquipementId(self, t):
 		self.EquipementId = t

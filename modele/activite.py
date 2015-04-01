@@ -7,11 +7,11 @@ class Activite :
 	def __repr__(self):
 		return "{} - {}".format(self.ActCode, self.ActLib)
     
-	def dysplay_ActCode(self):
+	def display_ActCode(self):
 		return str(self.ActCode)
-	def dysplay_ActLib(self):
+	def display_ActLib(self):
 		return str(self.ActLib)
-	def dysplay_EquipementId(self):
+	def display_EquipementId(self):
 		return str(self.EquipementId)
 
 	def set_ActCode(self, t):
