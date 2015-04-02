@@ -1,0 +1,15 @@
+<%inherit file="base.html"/>
+<select id=ville>
+	% for row in rows:
+		${makerow(row)}
+	% endfor
+</select>
+ 
+<%def name="makerow(row)">
+	<option>
+		% for name in row:
+			${name}\
+		% endfor
+	</option>
+</%def>
+<input type="button" onclick="window.location.href='installationParVille/' + document.getElementById('ville').value;" value="Valider"/>

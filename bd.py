@@ -29,7 +29,7 @@ class bd:
 		
 
 	def afficheEquipement(self):
-		results = self.c.execute('SELECT * FROM equipement ORDER BY EquNom')
+		results = self.c.execute('SELECT DISTINCT * FROM equipement ORDER BY EquNom')
 		tab=[]
 		for row in results:
 			equ= equipement.Equipement(row[0], row[1], row[2])
@@ -38,14 +38,17 @@ class bd:
 
 	def afficheEquipementLib(self):
 		results = self.c.execute('SELECT DISTINCT EquNom FROM equipement')
-		return results
+		tab=[]
+		for row in results:
+			tab.append(row[0])
+		return tab
 
 	def insertActivite(self, activite):
 		self.c.execute("INSERT INTO activite VALUES(?, ?, ?)", (activite.display_ActCode(), activite.display_ActLib(), activite.display_EquipementId()))
 		
 		
 	def afficheActivite(self):
-		results = self.c.execute('SELECT * FROM activite ORDER BY ActLib')
+		results = self.c.execute('SELECT DISTINCT * FROM activite ORDER BY ActLib')
 		tab=[]
 		for row in results:
 			act= activite.Activite(row[0], row[1], row[2])
@@ -59,9 +62,10 @@ class bd:
 	def insertInstallation(self, installation):
 		self.c.execute("INSERT INTO installation VALUES(?, ?, ?, ?, ?, ?, ?, ?)", (installation.get_InsNumeroInstall(), installation.get_InsPartLibelle(), installation.get_InsNoVoie(), installation.get_InsLibelleVoie(), installation.get_InsCodePostal(), installation.get_ComLib(), installation.get_Latitude(), installation.get_Longitude()))
 		
+
 		
 	def afficheInstallation(self):
-		results = self.c.execute('SELECT * FROM installation ORDER BY InsNumeroInstall')
+		results = self.c.execute('SELECT DISTINCT * FROM installation ORDER BY InsNumeroInstall')
 		tab=[]
 		for row in results:
 			ins= installation.Installation(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7])
@@ -70,11 +74,23 @@ class bd:
 
 	def afficheInstallationVille(self):
 		results = self.c.execute('SELECT DISTINCT ComLib FROM installation')
-		return results
+		tab=[]
+		for row in results:
+			tab.append(row[0])
+		return tab
 
 	def afficheInstallationParVille(self, ville):
 		results = self.c.execute('''SELECT DISTINCT InsPartLibelle FROM installation WHERE ComLib = "'''+ ville +'''"''')
 		return results
+	def afficheInstallationParVilleParAct(self, ville, activite):
+		results = self.c.execute("SELECT i.ComLib, e.EquNom, i.Longitude, i.Latitude FROM activite a, installation i, equipement e where i.InsNumeroInstall = e.InsNumeroInstall and e.EquipementId = a.EquipementId  ")
+		tab=[]
+		for row in results:
+			print(row)
+		return results 
+
+	def actParVille(self, ville):
+		return self.c.execute("SELECT a.ActLib, e.EquNom, i.Longitude, i.Latitude FROM activite a, installation i, equipement e where i.InsNumeroInstall = e.InsNumeroInstall and e.EquipementId = a.EquipementId and i.ComLib = '{}' ".format(ville))
 
 	def commit(self):
 		self.conn.commit()

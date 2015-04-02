@@ -1,15 +1,26 @@
 <%inherit file="base.html"/>
-
 <table border=1>
-	% for row in rows:
-		${makerow(row)}
+	% for row in titre:
+	${maketh(row)}
+	% endfor
+
+	% for row in liste:
+	${makerow(row)}
 	% endfor
 </table>
  
 <%def name="makerow(row)">
 	<tr>
-		% for name in row:
-			<td>${name}</td>\
-		% endfor
+	% for name in row:
+		<td>${name}</td>\
+	% endfor
+	</tr>
+</%def>
+ 
+ <%def name="maketh(row)">
+	<tr>
+	% for name in row:
+		<th>${name}</th>\
+	% endfor
 	</tr>
 </%def>
